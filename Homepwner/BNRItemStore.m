@@ -6,6 +6,13 @@
 //
 
 #import "BNRItemStore.h"
+#import "BNRItem.h"
+
+@interface BNRItemStore ()
+
+@property (nonatomic) NSMutableArray<BNRItem *> *privateItems;
+
+@end
 
 @implementation BNRItemStore
 
@@ -30,7 +37,25 @@
 
 - (instancetype)initPrivate
 {
-    return [super init];
+    if (self = [super init]) {
+        _privateItems = [[NSMutableArray<BNRItem *> alloc] init];
+    }
+    
+    return self;
+}
+
+- (NSArray<BNRItem *> *)allItems
+{
+    return [self.privateItems copy];
+}
+
+- (BNRItem *)createItem
+{
+    BNRItem *item = [BNRItem randomItem];
+    
+    [self.privateItems addObject:item];
+    
+    return item;
 }
 
 

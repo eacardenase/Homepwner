@@ -7,11 +7,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class BNRItem;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNRItemStore : NSObject
 
+@property (nonatomic, readonly) NSArray<BNRItem *> *allItems;
+
 + (instancetype)sharedStore;
+- (BNRItem *)createItem;
 
 @end
 
