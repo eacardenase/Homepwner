@@ -40,6 +40,11 @@
     
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:@"UITableViewCell"];
+    
+    self.headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
+    self.headerView.delegate = self;
+    
+    [self setupViews];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -58,6 +63,21 @@
     cell.textLabel.text = currentItem.description;
     
     return cell;
+}
+
+- (void)addNewItem:(id)sender
+{
+    NSLog(@"addItem: tapped");
+}
+
+- (void)toggleEditingMode:(id)sender
+{
+    NSLog(@"toggleEditingMode: tapped");
+}
+
+- (void)setupViews
+{
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 

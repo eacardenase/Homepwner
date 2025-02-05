@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BNRHeaderView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BNRItemsViewController : UITableViewController
+@interface BNRItemsViewController : UITableViewController <BNRHeaderViewProtocol>
+
+@property (nonatomic) BNRHeaderView *headerView;
 
 @end
 
