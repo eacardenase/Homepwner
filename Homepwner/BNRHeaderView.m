@@ -27,20 +27,7 @@
 
 - (void)setupViews
 {
-    self.editButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
-    [self.editButton addTarget:self
-                        action:@selector(handleEditButtonTap:)
-              forControlEvents:UIControlEventTouchUpInside];
-    
-    self.addItemButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.addItemButton setTitle:@"New" forState:UIControlStateNormal];
-    [self.addItemButton addTarget:self
-                           action:@selector(handleAddButtonTap:)
-                 forControlEvents:UIControlEventTouchUpInside];
-    
-    self.editButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.addItemButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.backgroundColor = [UIColor clearColor]; // transparent
     
     UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
         self.editButton, self.addItemButton
@@ -58,6 +45,34 @@
         [stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
         [stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20],
     ]];
+}
+
+- (UIButton *)editButton
+{
+    if (!_editButton) {
+        _editButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        _editButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_editButton addTarget:self
+                            action:@selector(handleEditButtonTap:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _editButton;
+}
+
+- (UIButton *)addItemButton
+{
+    if (!_addItemButton) {
+        _addItemButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_addItemButton setTitle:@"New" forState:UIControlStateNormal];
+        _addItemButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_addItemButton addTarget:self
+                               action:@selector(handleAddButtonTap:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _addItemButton;
 }
 
 # pragma mark - Actions

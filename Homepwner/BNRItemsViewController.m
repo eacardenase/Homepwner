@@ -25,7 +25,7 @@
             [[BNRItemStore sharedStore] createItem];
         }
     }
-
+    
     return self;
 }
 
@@ -41,7 +41,6 @@
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:@"UITableViewCell"];
     
-    self.headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
     self.headerView.delegate = self;
     
     [self setupViews];
@@ -56,13 +55,22 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"
                                                             forIndexPath:indexPath];
- 
+    
     NSArray<BNRItem *> *items = [[BNRItemStore sharedStore] allItems];
     BNRItem *currentItem = items[indexPath.row];
     
     cell.textLabel.text = currentItem.description;
     
     return cell;
+}
+
+- (BNRHeaderView *)headerView
+{
+    if (!_headerView) {
+        _headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
+    }
+    
+    return _headerView;
 }
 
 - (void)addNewItem:(id)sender
