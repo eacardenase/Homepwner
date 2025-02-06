@@ -21,9 +21,7 @@
 - (instancetype)init
 {
     if (self = [super initWithStyle:UITableViewStylePlain]) {
-        for (int i = 0; i < 5; i++) {
-            [[BNRItemStore sharedStore] createItem];
-        }
+        //
     }
     
     return self;
@@ -82,7 +80,13 @@
 
 - (void)addNewItem:(id)sender
 {
-    NSLog(@"addItem: tapped");
+    BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
+    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+    
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationTop];
 }
 
 - (void)toggleEditingMode:(id)sender
