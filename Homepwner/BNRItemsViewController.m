@@ -56,6 +56,7 @@
 - (void)setupViews
 {
     self.tableView.tableHeaderView = self.headerView;
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 #pragma mark - UITableViewDataSource
@@ -112,7 +113,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
     
     [self.tableView insertRowsAtIndexPaths:@[indexPath]
-                          withRowAnimation:UITableViewRowAnimationTop];
+                          withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)toggleEditingMode:(id)sender
