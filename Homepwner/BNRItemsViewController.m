@@ -97,6 +97,11 @@
                                         toIndex:destinationIndexPath.row];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+
 #pragma mark - Actions
 
 - (void)addNewItem:(id)sender
