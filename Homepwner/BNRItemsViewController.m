@@ -8,6 +8,7 @@
 #import "BNRItemsViewController.h"
 #import "BNRItemStore.h"
 #import "BNRItem.h"
+#import "BNRDetailViewController.h"
 
 @interface BNRItemsViewController ()
 
@@ -32,18 +33,6 @@
     return [self init];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self.tableView registerClass:[UITableViewCell class]
-           forCellReuseIdentifier:@"UITableViewCell"];
-    
-    self.headerView.delegate = self;
-    
-    [self setupViews];
-}
-
 - (BNRHeaderView *)headerView
 {
     if (!_headerView) {
@@ -56,7 +45,34 @@
 - (void)setupViews
 {
     self.tableView.tableHeaderView = self.headerView;
+}
+
+#pragma mark - Lifecycle
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:@"UITableViewCell"];
+    
+    self.headerView.delegate = self;
+    
+    [self setupViews];
 }
 
 #pragma mark - UITableViewDataSource
@@ -101,6 +117,13 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"Remove";
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BNRDetailViewController *detailController = [[BNRDetailViewController alloc] init];
+    
+    [self.navigationController pushViewController:detailController animated:YES];
 }
 
 #pragma mark - Actions
