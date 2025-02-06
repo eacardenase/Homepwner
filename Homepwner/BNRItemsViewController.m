@@ -73,6 +73,13 @@
     return _headerView;
 }
 
+- (void)setupViews
+{
+    self.tableView.tableHeaderView = self.headerView;
+}
+
+#pragma mark - Actions
+
 - (void)addNewItem:(id)sender
 {
     NSLog(@"addItem: tapped");
@@ -81,11 +88,6 @@
 - (void)toggleEditingMode:(id)sender
 {
     NSLog(@"toggleEditingMode: tapped");
-}
-
-- (void)setupViews
-{
-    self.tableView.tableHeaderView = self.headerView;
 }
 
 
