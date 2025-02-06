@@ -44,6 +44,35 @@
     [self setupViews];
 }
 
+- (BNRHeaderView *)headerView
+{
+    if (!_headerView) {
+        _headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
+    }
+    
+    return _headerView;
+}
+
+- (void)setupViews
+{
+    self.tableView.tableHeaderView = self.headerView;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSArray<BNRItem *> *allItems = [[BNRItemStore sharedStore] allItems];
+        BNRItem *item = allItems[indexPath.row];
+        
+        [[BNRItemStore sharedStore] removeItem:item];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[[BNRItemStore sharedStore] allItems] count];
@@ -60,20 +89,6 @@
     cell.textLabel.text = currentItem.description;
     
     return cell;
-}
-
-- (BNRHeaderView *)headerView
-{
-    if (!_headerView) {
-        _headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
-    }
-    
-    return _headerView;
-}
-
-- (void)setupViews
-{
-    self.tableView.tableHeaderView = self.headerView;
 }
 
 #pragma mark - Actions
