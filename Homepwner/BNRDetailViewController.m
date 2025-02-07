@@ -72,6 +72,31 @@
     return _serialNumberField;
 }
 
+- (UILabel *)valueLabel
+{
+    if (!_valueLabel) {
+        _valueLabel = [[UILabel alloc] init];
+        _valueLabel.text = @"Value";
+        _valueLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [_valueLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                              forAxis:UILayoutConstraintAxisHorizontal];
+    }
+    
+    return _valueLabel;
+}
+
+- (UITextField *)valueField
+{
+    if (!_valueField) {
+        _valueField = [UITextField new];
+        _valueField.borderStyle = UITextBorderStyleRoundedRect;
+        _valueField.text = [NSString stringWithFormat:@"%d", self.item.valueInDollars];
+        _valueField.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    
+    return _valueField;
+}
+
 - (void)setupViews
 {
     self.title = self.item.itemName;
@@ -80,6 +105,8 @@
     [self.view addSubview:self.nameField];
     [self.view addSubview:self.serialNumberLabel];
     [self.view addSubview:self.serialNumberField];
+    [self.view addSubview:self.valueLabel];
+    [self.view addSubview:self.valueField];
     
     [NSLayoutConstraint activateConstraints:@[
         [self.nameLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
@@ -90,14 +117,23 @@
         [self.nameField.leadingAnchor constraintEqualToAnchor:self.nameLabel.trailingAnchor constant:20],
         [self.nameField.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-20],
         
-        [self.serialNumberLabel.topAnchor constraintEqualToAnchor:self.nameLabel.bottomAnchor constant:20],
+        [self.serialNumberLabel.topAnchor constraintEqualToAnchor:self.nameLabel.bottomAnchor constant:10],
         [self.serialNumberLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
         [self.serialNumberLabel.trailingAnchor constraintEqualToAnchor:self.nameLabel.trailingAnchor],
         [self.serialNumberLabel.centerYAnchor constraintEqualToAnchor:self.serialNumberField.centerYAnchor],
         
         [self.serialNumberField.topAnchor constraintEqualToAnchor:self.serialNumberLabel.topAnchor],
         [self.serialNumberField.leadingAnchor constraintEqualToAnchor:self.nameField.leadingAnchor],
-        [self.serialNumberField.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor]
+        [self.serialNumberField.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
+        
+        [self.valueLabel.topAnchor constraintEqualToAnchor:self.serialNumberLabel.bottomAnchor constant:10],
+        [self.valueLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
+        [self.valueLabel.trailingAnchor constraintEqualToAnchor:self.nameLabel.trailingAnchor],
+        [self.valueLabel.centerYAnchor constraintEqualToAnchor:self.valueField.centerYAnchor],
+        
+        [self.valueField.topAnchor constraintEqualToAnchor:self.valueLabel.topAnchor],
+        [self.valueField.leadingAnchor constraintEqualToAnchor:self.nameField.leadingAnchor],
+        [self.valueField.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor]
     ]];
 }
 
