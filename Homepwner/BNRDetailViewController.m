@@ -6,6 +6,7 @@
 //
 
 #import "BNRDetailViewController.h"
+#import "BNRItem.h"
 
 @interface BNRDetailViewController ()
 
@@ -42,6 +43,7 @@
         _nameField.borderStyle = UITextBorderStyleRoundedRect;
         _nameField.text = self.item.itemName;
         _nameField.translatesAutoresizingMaskIntoConstraints = NO;
+        _nameField.delegate = self;
     }
     
     return _nameField;
@@ -67,6 +69,7 @@
         _serialNumberField.borderStyle = UITextBorderStyleRoundedRect;
         _serialNumberField.text = self.item.serialNumber;
         _serialNumberField.translatesAutoresizingMaskIntoConstraints = NO;
+        _serialNumberField.delegate = self;
     }
     
     return _serialNumberField;
@@ -92,6 +95,7 @@
         _valueField.borderStyle = UITextBorderStyleRoundedRect;
         _valueField.text = [NSString stringWithFormat:@"%d", self.item.valueInDollars];
         _valueField.translatesAutoresizingMaskIntoConstraints = NO;
+        _valueField.delegate = self;
     }
     
     return _valueField;
@@ -180,5 +184,16 @@
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.view endEditing:YES];
+    
+    BNRItem *item = self.item;
+    item.itemName = self.nameField.text;
+    item.serialNumber = self.serialNumberField.text;
+    item.valueInDollars = [self.valueField.text intValue];
+}
 
 @end

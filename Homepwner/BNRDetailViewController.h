@@ -7,11 +7,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BNRItem.h"
+@class BNRItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BNRDetailViewController : UIViewController
+@interface BNRDetailViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic) BNRItem *item;
 

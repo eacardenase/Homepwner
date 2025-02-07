@@ -53,6 +53,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self.tableView reloadData];
+    
     self.navigationController.navigationBar.hidden = YES;
 }
 
