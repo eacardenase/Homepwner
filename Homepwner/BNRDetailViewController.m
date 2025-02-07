@@ -97,6 +97,28 @@
     return _valueField;
 }
 
+- (UILabel *)dateLabel
+{
+    static NSDateFormatter *dateFormatter = nil;
+    
+    if (!dateFormatter) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    }
+    
+    if (!_dateLabel) {
+        _dateLabel = [[UILabel alloc] init];
+        _dateLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _dateLabel.textAlignment = NSTextAlignmentCenter;
+        _dateLabel.text = [dateFormatter stringFromDate:self.item.dateCreated];
+        [_dateLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                       forAxis:UILayoutConstraintAxisHorizontal];
+    }
+    
+    return _dateLabel;
+}
+
 - (void)setupViews
 {
     self.title = self.item.itemName;
@@ -107,11 +129,13 @@
     [self.view addSubview:self.serialNumberField];
     [self.view addSubview:self.valueLabel];
     [self.view addSubview:self.valueField];
+    [self.view addSubview:self.dateLabel];
     
     [NSLayoutConstraint activateConstraints:@[
         [self.nameLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
         [self.nameLabel.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:20],
         [self.nameLabel.centerYAnchor constraintEqualToAnchor:self.nameField.centerYAnchor],
+        [self.nameLabel.widthAnchor constraintEqualToConstant:50],
         
         [self.nameField.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor],
         [self.nameField.leadingAnchor constraintEqualToAnchor:self.nameLabel.trailingAnchor constant:20],
@@ -133,7 +157,11 @@
         
         [self.valueField.topAnchor constraintEqualToAnchor:self.valueLabel.topAnchor],
         [self.valueField.leadingAnchor constraintEqualToAnchor:self.nameField.leadingAnchor],
-        [self.valueField.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor]
+        [self.valueField.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
+        
+        [self.dateLabel.topAnchor constraintEqualToAnchor:self.valueLabel.bottomAnchor constant:10],
+        [self.dateLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
+        [self.dateLabel.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor]
     ]];
 }
 
