@@ -7,9 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BNRItem.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNRDetailViewController : UIViewController
+
+@property (nonatomic) BNRItem *item;
 
 @end
 

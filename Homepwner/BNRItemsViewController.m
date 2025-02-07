@@ -121,7 +121,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *allItems = [[BNRItemStore sharedStore] allItems];
+    BNRItem *item = allItems[indexPath.row];
+    
     BNRDetailViewController *detailController = [[BNRDetailViewController alloc] init];
+    detailController.item = item;
     
     [self.navigationController pushViewController:detailController animated:YES];
 }
