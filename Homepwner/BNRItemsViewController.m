@@ -22,7 +22,14 @@
 - (instancetype)init
 {
     if (self = [super initWithStyle:UITableViewStylePlain]) {
-        //
+        UINavigationItem *navItem = self.navigationItem;
+        navItem.title = @"Homepwner";
+        
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                   target:self
+                                                                                   action:@selector(addNewItem:)];
+        navItem.rightBarButtonItem = addButton;
+        navItem.leftBarButtonItem = self.editButtonItem;
     }
     
     return self;
@@ -33,20 +40,6 @@
     return [self init];
 }
 
-- (BNRHeaderView *)headerView
-{
-    if (!_headerView) {
-        _headerView = [[BNRHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
-    }
-    
-    return _headerView;
-}
-
-- (void)setupViews
-{
-    self.tableView.tableHeaderView = self.headerView;
-}
-
 #pragma mark - Lifecycle
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,15 +47,6 @@
     [super viewWillAppear:animated];
     
     [self.tableView reloadData];
-    
-    self.navigationController.navigationBar.hidden = YES;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)viewDidLoad
@@ -71,10 +55,6 @@
     
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:@"UITableViewCell"];
-    
-    self.headerView.delegate = self;
-    
-    [self setupViews];
 }
 
 #pragma mark - UITableViewDataSource
