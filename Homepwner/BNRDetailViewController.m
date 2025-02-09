@@ -17,6 +17,7 @@
 @property (nonatomic) UILabel *valueLabel;
 @property (nonatomic) UITextField *valueField;
 @property (nonatomic) UILabel *dateLabel;
+@property (nonatomic) UIImageView *imageView;
 
 @end
 
@@ -95,6 +96,7 @@
         _valueField.borderStyle = UITextBorderStyleRoundedRect;
         _valueField.text = [NSString stringWithFormat:@"%d", self.item.valueInDollars];
         _valueField.translatesAutoresizingMaskIntoConstraints = NO;
+        _valueField.keyboardType = UIKeyboardTypeNumberPad;
         _valueField.delegate = self;
     }
     
@@ -123,6 +125,18 @@
     return _dateLabel;
 }
 
+- (UIImageView *)imageView
+{
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] init];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+        _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
+    }
+    
+    return _imageView;
+}
+
 - (void)setupViews
 {
     self.title = self.item.itemName;
@@ -134,6 +148,7 @@
     [self.view addSubview:self.valueLabel];
     [self.view addSubview:self.valueField];
     [self.view addSubview:self.dateLabel];
+    [self.view addSubview:self.imageView];
     
     [NSLayoutConstraint activateConstraints:@[
         [self.nameLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
@@ -165,7 +180,12 @@
         
         [self.dateLabel.topAnchor constraintEqualToAnchor:self.valueLabel.bottomAnchor constant:10],
         [self.dateLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
-        [self.dateLabel.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor]
+        [self.dateLabel.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
+        
+        [self.imageView.topAnchor constraintEqualToAnchor:self.dateLabel.bottomAnchor constant:10],
+        [self.imageView.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
+        [self.imageView.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
+        [self.imageView.heightAnchor constraintEqualToAnchor:self.imageView.widthAnchor],
     ]];
 }
 
