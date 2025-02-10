@@ -31,7 +31,7 @@
         _nameLabel.text = @"Name";
         _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_nameLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                                    forAxis:UILayoutConstraintAxisHorizontal];
+                                      forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _nameLabel;
@@ -57,7 +57,7 @@
         _serialNumberLabel.text = @"Serial";
         _serialNumberLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_serialNumberLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                      forAxis:UILayoutConstraintAxisHorizontal];
+                                              forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _serialNumberLabel;
@@ -83,7 +83,7 @@
         _valueLabel.text = @"Value";
         _valueLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_valueLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                              forAxis:UILayoutConstraintAxisHorizontal];
+                                       forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _valueLabel;
@@ -119,7 +119,7 @@
         _dateLabel.textAlignment = NSTextAlignmentCenter;
         _dateLabel.text = [dateFormatter stringFromDate:self.item.dateCreated];
         [_dateLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                       forAxis:UILayoutConstraintAxisHorizontal];
+                                      forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _dateLabel;
@@ -140,6 +140,10 @@
 - (void)setupViews
 {
     self.title = self.item.itemName;
+    self.navigationController.toolbarHidden = NO;
+    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                                        target:self
+                                                                        action:@selector(takePicture:)]];
     
     [self.view addSubview:self.nameLabel];
     [self.view addSubview:self.nameField];
@@ -214,6 +218,13 @@
     item.itemName = self.nameField.text;
     item.serialNumber = self.serialNumberField.text;
     item.valueInDollars = [self.valueField.text intValue];
+}
+
+#pragma mark - Actions
+
+- (void)takePicture:(id)sender
+{
+    NSLog(@"DEBUG: takePicture: button tapped");
 }
 
 @end
