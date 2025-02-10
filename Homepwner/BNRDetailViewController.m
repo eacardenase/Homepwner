@@ -8,7 +8,7 @@
 #import "BNRDetailViewController.h"
 #import "BNRItem.h"
 
-@interface BNRDetailViewController ()
+@interface BNRDetailViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) UITextField *nameField;
@@ -189,7 +189,7 @@
         [self.imageView.topAnchor constraintEqualToAnchor:self.dateLabel.bottomAnchor constant:10],
         [self.imageView.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
         [self.imageView.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
-        [self.imageView.heightAnchor constraintEqualToAnchor:self.imageView.widthAnchor],
+        [self.imageView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-10]
     ]];
 }
 
@@ -225,6 +225,26 @@
 - (void)takePicture:(id)sender
 {
     NSLog(@"DEBUG: takePicture: button tapped");
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.delegate = self;
+    
+    [self presentViewController:imagePicker
+                       animated:YES
+                     completion:nil];
 }
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    [self.imageView setImage:image];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

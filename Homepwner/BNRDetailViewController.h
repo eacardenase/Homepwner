@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BNRDetailViewController : UIViewController <UITextFieldDelegate>
+@interface BNRDetailViewController : UIViewController
 
 @property (nonatomic) BNRItem *item;
 
