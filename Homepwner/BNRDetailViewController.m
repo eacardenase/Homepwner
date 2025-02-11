@@ -7,6 +7,7 @@
 
 #import "BNRDetailViewController.h"
 #import "BNRItem.h"
+#import "BNRImageStore.h"
 
 @interface BNRDetailViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -241,6 +242,9 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    [[BNRImageStore sharedStore] setImage:image
+                                   forKey:self.item.itemKey];
     
     [self.imageView setImage:image];
     [self dismissViewControllerAnimated:YES completion:nil];
