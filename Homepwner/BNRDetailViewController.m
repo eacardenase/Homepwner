@@ -133,6 +133,11 @@
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        
+        UIImage *itemImage = [[BNRImageStore sharedStore]
+                              imageForKey:self.item.itemKey];
+        
+        _imageView.image = itemImage;
     }
     
     return _imageView;
