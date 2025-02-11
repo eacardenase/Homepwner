@@ -197,6 +197,10 @@
         [self.imageView.trailingAnchor constraintEqualToAnchor:self.nameField.trailingAnchor],
         [self.imageView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-10]
     ]];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 #pragma mark - Lifecycle
@@ -240,6 +244,11 @@
     [self presentViewController:imagePicker
                        animated:YES
                      completion:nil];
+}
+
+- (void)dismissKeyboard
+{
+    [self.view endEditing:YES];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
