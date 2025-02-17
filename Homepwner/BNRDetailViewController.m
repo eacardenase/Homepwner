@@ -129,15 +129,13 @@
 - (UIImageView *)imageView
 {
     if (!_imageView) {
-        _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-        _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
-        
         UIImage *itemImage = [[BNRImageStore sharedStore]
                               imageForKey:self.item.itemKey];
         
-        _imageView.image = itemImage;
+        _imageView = [[UIImageView alloc] initWithImage:itemImage];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+        _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
     }
     
     return _imageView;
