@@ -211,13 +211,13 @@
     [self.view addGestureRecognizer:tapGesture];
 }
 
-- (void)prepareViewsForOrientation:(UIInterfaceOrientation)orientation
+- (void)prepareViewsForOrientation:(UITraitCollection *)collection
 {
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         return;
     }
     
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
+    if (collection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.imageView.hidden = YES;
         self.cameraButton.enabled = NO;
     } else {
@@ -257,14 +257,14 @@
 {
     [super viewWillAppear:animated];
     
-    UIInterfaceOrientation interfaceOrientation = UIApplication.sharedApplication.statusBarOrientation;
-    
-    [self prepareViewsForOrientation:interfaceOrientation];
+    [self prepareViewsForOrientation:[UITraitCollection currentTraitCollection]];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [self prepareViewsForOrientation:toInterfaceOrientation];
+    [self prepareViewsForOrientation:newCollection];
+    
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - Actions
