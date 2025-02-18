@@ -19,6 +19,7 @@
 @property (nonatomic) UITextField *valueField;
 @property (nonatomic) UILabel *dateLabel;
 @property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UIBarButtonItem *cameraButton;
 
 @end
 
@@ -141,13 +142,22 @@
     return _imageView;
 }
 
+- (UIBarButtonItem *)cameraButton
+{
+    if (!_cameraButton) {
+        _cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                                      target:self
+                                                                      action:@selector(takePicture:)];
+    }
+    
+    return _cameraButton;
+}
+
 - (void)setupViews
 {
     self.title = self.item.itemName;
     self.navigationController.toolbarHidden = NO;
-    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
-                                                                        target:self
-                                                                        action:@selector(takePicture:)]];
+    self.toolbarItems = @[self.cameraButton];
     
     [self.view addSubview:self.nameLabel];
     [self.view addSubview:self.nameField];
@@ -201,6 +211,21 @@
     [self.view addGestureRecognizer:tapGesture];
 }
 
+- (void)prepareViewsForOrientation:(UIInterfaceOrientation)orientation
+{
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        return;
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        self.imageView.hidden = YES;
+        self.cameraButton.enabled = NO;
+    } else {
+        self.imageView.hidden = NO;
+        self.cameraButton.enabled = YES;
+    }
+}
+
 #pragma mark - Lifecycle
 
 - (void)loadView
@@ -226,6 +251,20 @@
     item.itemName = self.nameField.text;
     item.serialNumber = self.serialNumberField.text;
     item.valueInDollars = [self.valueField.text intValue];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UIInterfaceOrientation interfaceOrientation = UIApplication.sharedApplication.statusBarOrientation;
+    
+    [self prepareViewsForOrientation:interfaceOrientation];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self prepareViewsForOrientation:toInterfaceOrientation];
 }
 
 #pragma mark - Actions
