@@ -9,7 +9,7 @@
 #import "BNRItem.h"
 #import "BNRImageStore.h"
 
-@interface BNRDetailViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
+@interface BNRDetailViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) UITextField *nameField;
@@ -20,7 +20,6 @@
 @property (nonatomic) UILabel *dateLabel;
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UIBarButtonItem *cameraButton;
-@property (nonatomic) UIPopoverController *imagePickerPopover;
 
 @end
 
@@ -274,31 +273,19 @@
 {
     NSLog(@"DEBUG: takePicture: button tapped");
     
-    if ([self.imagePickerPopover isPopoverVisible]) {
-        [self.imagePickerPopover dismissPopoverAnimated:YES];
-        self.imagePickerPopover = nil;
-        
-        return;
-    }
-    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
     
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        self.imagePickerPopover = [[UIPopoverController alloc]
-                                                  initWithContentViewController:imagePicker];
-        self.imagePickerPopover.delegate = self;
-        
-        [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
-                                        permittedArrowDirections:UIPopoverArrowDirectionAny
-                                                        animated:YES];
-    } else {
-        [self presentViewController:imagePicker
-                           animated:YES
-                         completion:nil];
+        imagePicker.modalPresentationStyle = UIModalPresentationPopover;
+        imagePicker.popoverPresentationController.barButtonItem = self.cameraButton;
     }
+    
+    [self presentViewController:imagePicker
+                       animated:YES
+                     completion:nil];
 }
 
 - (void)dismissKeyboard
@@ -317,12 +304,7 @@
     
     [self.imageView setImage:image];
     
-    if (self.imagePickerPopover) {
-        [self.imagePickerPopover dismissPopoverAnimated:YES];
-        self.imagePickerPopover = nil;
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -334,15 +316,5 @@
     return YES;
 }
 
-#pragma mark - UIPopoverControllerDelegate
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    NSLog(@"User dismissed popover");
-    self.imagePickerPopover = nil;
-}
-
 
 @end
-
-// UIPopoverPresentationController
