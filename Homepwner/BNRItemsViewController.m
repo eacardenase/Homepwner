@@ -10,7 +10,7 @@
 #import "BNRItem.h"
 #import "BNRDetailViewController.h"
 
-@interface BNRItemsViewController ()
+@interface BNRItemsViewController () <BNRDetailViewControllerDelegate>
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
@@ -119,10 +119,11 @@
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
     BNRDetailViewController *detailController = [[BNRDetailViewController alloc] initForNewItem:YES];
     detailController.item = newItem;
-
+    detailController.delegate = self;
+    
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailController];
-
+    
     [self presentViewController:navController animated:YES completion:nil];
 }
 
@@ -137,6 +138,18 @@
         
         [self setEditing:YES animated:YES];
     }
+}
+
+#pragma mark - BNRDetailViewControllerDelegate
+
+- (void)insertInTableView:(BNRItem *)newItem
+{
+    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+    
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationFade];
 }
 
 
