@@ -117,12 +117,13 @@
 - (void)addNewItem:(id)sender
 {
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
-    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
-    
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]
-                          withRowAnimation:UITableViewRowAnimationFade];
+    BNRDetailViewController *detailController = [[BNRDetailViewController alloc] initForNewItem:YES];
+    detailController.item = newItem;
+
+    UINavigationController *navController = [[UINavigationController alloc]
+                                             initWithRootViewController:detailController];
+
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)toggleEditingMode:(id)sender
