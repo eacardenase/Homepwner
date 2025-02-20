@@ -228,6 +228,36 @@
 
 #pragma mark - Lifecycle
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    @throw [NSException exceptionWithName:@"Wrong initializer"
+                                   reason:@"Use initForNewItem:"
+                                 userInfo:nil];
+    
+    return nil;
+}
+
+- (instancetype)initForNewItem:(BOOL)isNew
+{
+    if (self = [super initWithNibName:nil bundle:nil]) {
+        if (isNew) {
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
+                                         initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                         target:self
+                                         action:@selector(save:)];
+            self.navigationItem.rightBarButtonItem = doneItem;
+            
+            UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]
+                                           initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                           target:self
+                                           action:@selector(cancel:)];
+            self.navigationItem.leftBarButtonItem = cancelItem;
+        }
+    }
+    
+    return self;
+}
+
 - (void)loadView
 {
     self.view = [UIView new];
@@ -291,6 +321,16 @@
 - (void)dismissKeyboard
 {
     [self.view endEditing:YES];
+}
+
+- (void)save:(id)sender
+{
+    //
+}
+
+- (void)cancel:(id)sender
+{
+    //
 }
 
 #pragma mark - UIImagePickerControllerDelegate

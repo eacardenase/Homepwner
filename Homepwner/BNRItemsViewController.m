@@ -106,7 +106,7 @@
     NSArray *allItems = [[BNRItemStore sharedStore] allItems];
     BNRItem *item = allItems[indexPath.row];
     
-    BNRDetailViewController *detailController = [[BNRDetailViewController alloc] init];
+    BNRDetailViewController *detailController = [[BNRDetailViewController alloc] initForNewItem:NO];
     detailController.item = item;
     
     [self.navigationController pushViewController:detailController animated:YES];

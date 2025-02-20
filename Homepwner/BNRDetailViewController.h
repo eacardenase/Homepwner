@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BNRDetailViewController : UIViewController
 
+- (instancetype)initForNewItem:(BOOL)isNew NS_DESIGNATED_INITIALIZER;
+
 @property (nonatomic) BNRItem *item;
 
 @end
