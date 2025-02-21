@@ -10,7 +10,7 @@
 #import "BNRItem.h"
 #import "BNRDetailViewController.h"
 
-@interface BNRItemsViewController () <BNRDetailViewControllerDelegate>
+@interface BNRItemsViewController ()
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
@@ -118,11 +118,20 @@
 {
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
     BNRDetailViewController *detailController = [[BNRDetailViewController alloc] initForNewItem:YES];
+    
     detailController.item = newItem;
-    detailController.delegate = self;
+    detailController.dismissBlock = ^{
+        NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+        
+        [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+    };
     
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -138,18 +147,6 @@
         
         [self setEditing:YES animated:YES];
     }
-}
-
-#pragma mark - BNRDetailViewControllerDelegate
-
-- (void)insertInTableView:(BNRItem *)newItem
-{
-    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
-    
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]
-                          withRowAnimation:UITableViewRowAnimationFade];
 }
 
 

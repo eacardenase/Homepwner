@@ -227,14 +227,6 @@
     }
 }
 
-- (void)setupItem
-{
-    BNRItem *item = self.item;
-    item.itemName = self.nameField.text;
-    item.serialNumber = self.serialNumberField.text;
-    item.valueInDollars = [self.valueField.text intValue];
-}
-
 #pragma mark - Lifecycle
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -285,7 +277,11 @@
     [super viewWillDisappear:animated];
     
     [self.view endEditing:YES];
-    [self setupItem];
+    
+    BNRItem *item = self.item;
+    item.itemName = self.nameField.text;
+    item.serialNumber = self.serialNumberField.text;
+    item.valueInDollars = [self.valueField.text intValue];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -330,13 +326,8 @@
 
 - (void)save:(id)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(insertInTableView:)]) {
-        [self setupItem];
-        [self.delegate insertInTableView:self.item];
-    }
-    
     [self.presentingViewController dismissViewControllerAnimated:YES
-                                                      completion:nil];
+                                                      completion:self.dismissBlock];
 }
 
 - (void)cancel:(id)sender

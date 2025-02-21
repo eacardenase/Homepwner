@@ -11,18 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol BNRDetailViewControllerDelegate <NSObject>
-
-- (void)insertInTableView:(BNRItem *)newItem;
-
-@end
-
 @interface BNRDetailViewController : UIViewController
 
 - (instancetype)initForNewItem:(BOOL)isNew NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic) BNRItem *item;
-@property (nonatomic, weak) id<BNRDetailViewControllerDelegate> delegate;
+@property (nonatomic, copy) void (^dismissBlock)(void);
 
 @end
 
