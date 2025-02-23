@@ -32,7 +32,7 @@
 
 - (instancetype)init
 {
-    @throw [NSException exceptionWithName:@"Singleton" 
+    @throw [NSException exceptionWithName:@"Singleton"
                                    reason:@"Use +[BNRItemStore sharedStore]"
                                  userInfo:nil];
 }
@@ -79,6 +79,16 @@
     
     [self.privateItems removeObjectAtIndex:fromIndex];
     [self.privateItems insertObject:item atIndex:toIndex];
+}
+
+- (NSString *)itemArchivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask,
+                                                                       YES);
+    NSString *documentDirectory = [documentDirectories firstObject];
+    
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
 }
 
 
