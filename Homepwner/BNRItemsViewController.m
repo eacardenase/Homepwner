@@ -132,7 +132,6 @@
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     [self presentViewController:navController animated:YES completion:nil];
 }
