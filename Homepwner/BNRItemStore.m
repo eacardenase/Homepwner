@@ -40,7 +40,12 @@
 - (instancetype)initPrivate
 {
     if (self = [super init]) {
-        _privateItems = [[NSMutableArray<BNRItem *> alloc] init];
+        NSString *path = [self itemArchivePath];
+        _privateItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        
+        if (!_privateItems) {
+            _privateItems = [NSMutableArray array];
+        }
     }
     
     return self;
@@ -99,6 +104,10 @@
     
     return [NSKeyedArchiver archiveRootObject:self.privateItems
                                        toFile:path];
+    //    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.privateItems
+    //                                         requiringSecureCoding:NO
+    //                                                         error:nil];
+    //    return [data writeToFile:path atomically:YES];
 }
 
 
