@@ -91,5 +91,15 @@
     return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
 }
 
+- (BOOL)saveChanges
+{
+    NSString *path = [self itemArchivePath];
+    
+    NSLog(@"%@", path);
+    
+    return [NSKeyedArchiver archiveRootObject:self.privateItems
+                                       toFile:path];
+}
+
 
 @end
