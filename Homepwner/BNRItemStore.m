@@ -41,9 +41,14 @@
 {
     if (self = [super init]) {
         NSString *path = [self itemArchivePath];
-        _privateItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        NSError *error;
+        
+        NSSet *validClasses = [NSSet setWithObjects: NSMutableArray.class, BNRItem.class, NSString.class, NSDate.class, nil];
+        _privateItems = [NSKeyedUnarchiver unarchivedObjectOfClasses:validClasses fromData:data error:&error];
         
         if (!_privateItems) {
+            NSLog(@"%@", error);
             _privateItems = [NSMutableArray array];
         }
     }
@@ -99,15 +104,10 @@
 - (BOOL)saveChanges
 {
     NSString *path = [self itemArchivePath];
-    
-    NSLog(@"%@", path);
-    
-    return [NSKeyedArchiver archiveRootObject:self.privateItems
-                                       toFile:path];
-    //    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.privateItems
-    //                                         requiringSecureCoding:NO
-    //                                                         error:nil];
-    //    return [data writeToFile:path atomically:YES];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.privateItems
+                                         requiringSecureCoding:YES
+                                                         error:nil];
+    return [data writeToFile:path atomically:YES];
 }
 
 
