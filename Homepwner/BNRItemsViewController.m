@@ -131,6 +131,7 @@
     
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailController];
+    navController.modalInPresentation = YES;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:navController animated:YES completion:nil];

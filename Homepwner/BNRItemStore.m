@@ -48,7 +48,7 @@
         _privateItems = [NSKeyedUnarchiver unarchivedObjectOfClasses:validClasses fromData:data error:&error];
         
         if (!_privateItems) {
-            NSLog(@"%@", error);
+            NSLog(@"%@", error.localizedDescription);
             _privateItems = [NSMutableArray array];
         }
     }
