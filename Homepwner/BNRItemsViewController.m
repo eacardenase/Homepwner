@@ -83,10 +83,25 @@
         NSArray<BNRItem *> *allItems = [[BNRItemStore sharedStore] allItems];
         BNRItem *item = allItems[indexPath.row];
         
-        [[BNRItemStore sharedStore] removeItem:item];
+        UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:@"Remove item?"
+                                                                            message:@"Please confirm that you want to remove an item."
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
         
-        [tableView deleteRowsAtIndexPaths:@[indexPath]
-                         withRowAnimation:UITableViewRowAnimationFade];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                               style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *destroyAction = [UIAlertAction actionWithTitle:@"Remove"
+                                                                style:UIAlertActionStyleDestructive
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+            [[BNRItemStore sharedStore] removeItem:item];
+            
+            [tableView deleteRowsAtIndexPaths:@[indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+        }];
+        
+        [alertViewController addAction:cancelAction];
+        [alertViewController addAction:destroyAction];
+        
+        [self presentViewController:alertViewController animated:YES completion:nil];
     }
 }
 
