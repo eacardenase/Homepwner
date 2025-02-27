@@ -130,6 +130,11 @@
     [self.navigationController pushViewController:detailController animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
+}
+
 #pragma mark - Actions
 
 - (void)addNewItem:(id)sender
