@@ -55,7 +55,7 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[BNRItemCell class]
-           forCellReuseIdentifier:@"BNRItemCell"];
+           forCellReuseIdentifier:NSStringFromClass([BNRItemCell class])];
 }
 
 #pragma mark - UITableViewDataSource
@@ -67,7 +67,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BNRItemCell"
+    BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([BNRItemCell class])
                                                             forIndexPath:indexPath];
     
     NSArray<BNRItem *> *items = [[BNRItemStore sharedStore] allItems];
@@ -128,11 +128,6 @@
     detailController.item = item;
     
     [self.navigationController pushViewController:detailController animated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 40;
 }
 
 #pragma mark - Actions
