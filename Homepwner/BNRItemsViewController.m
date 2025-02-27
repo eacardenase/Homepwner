@@ -10,6 +10,8 @@
 #import "BNRItem.h"
 #import "BNRDetailViewController.h"
 #import "BNRItemCell.h"
+#import "BNRImageStore.h"
+#import "BNRImageViewController.h"
 
 @interface BNRItemsViewController ()
 
@@ -82,7 +84,26 @@
     }];
     
     cell.actionBlock = ^{
-        NSLog(@"Going to show image for %@", currentItem);
+        if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+            return;
+        }
+        
+        NSString *itemKey = currentItem.itemKey;
+        UIImage *image = [[BNRImageStore sharedStore] imageForKey:itemKey];
+        
+        if (!image) {
+            return;
+        }
+        
+        BNRImageViewController *imageViewController = [[BNRImageViewController alloc] init];
+        
+        imageViewController.image = image;
+        imageViewController.modalPresentationStyle = UIModalPresentationPopover;
+        imageViewController.popoverPresentationController.sourceView = cell.itemImageView;
+        
+        [self presentViewController:imageViewController
+                           animated:YES
+                         completion:nil];
     };
     
     return cell;
