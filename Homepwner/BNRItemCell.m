@@ -27,6 +27,8 @@
         _itemImageView.contentMode = UIViewContentModeScaleAspectFit;
         _itemImageView.translatesAutoresizingMaskIntoConstraints = NO;
         _itemImageView.tintColor = [UIColor lightGrayColor];
+        _itemImageView.layer.cornerRadius = 8.0;
+        _itemImageView.layer.masksToBounds = YES;
     }
     
     return _itemImageView;
