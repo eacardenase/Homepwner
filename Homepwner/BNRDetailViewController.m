@@ -122,7 +122,7 @@
         _dateLabel.textAlignment = NSTextAlignmentCenter;
         _dateLabel.text = [dateFormatter stringFromDate:self.item.dateCreated];
         [_dateLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                      forAxis:UILayoutConstraintAxisHorizontal];
+                                      forAxis:UILayoutConstraintAxisVertical];
     }
     
     return _dateLabel;
@@ -134,10 +134,15 @@
         UIImage *itemImage = [[BNRImageStore sharedStore]
                               imageForKey:self.item.itemKey];
         
+        if (!itemImage) {
+            itemImage = _item.thumbnail;
+        }
+        
         _imageView = [[UIImageView alloc] initWithImage:itemImage];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _imageView.tintColor = [UIColor lightGrayColor];
     }
     
     return _imageView;
