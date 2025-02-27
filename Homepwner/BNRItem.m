@@ -77,8 +77,11 @@
 
 - (void)setThumbnailFromImage:(UIImage *)image
 {    
+    UIGraphicsImageRendererFormat *format = [[UIGraphicsImageRendererFormat alloc] init];
+    format.scale = 1.0;
+    
     UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc]
-                                         initWithSize:CGSizeMake(40, 40)];
+                                         initWithSize:CGSizeMake(40, 40) format:format];
     self.thumbnail = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
         [image drawInRect:renderer.format.bounds];
     }];
