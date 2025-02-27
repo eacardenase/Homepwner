@@ -76,6 +76,7 @@
     cell.nameLabel.text = currentItem.itemName;
     cell.serialNumberLabel.text = currentItem.serialNumber;
     cell.valueLabel.text = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
+    cell.itemImageView.image = currentItem.thumbnail;
     
     return cell;
 }

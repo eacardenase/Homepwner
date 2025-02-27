@@ -52,6 +52,7 @@
         NSUUID *uuid = [[NSUUID alloc] init];
         NSString *key = [uuid UUIDString];
         _itemKey = key;
+        _thumbnail = [UIImage systemImageNamed:@"photo"];
     }
     
     return self;
@@ -74,6 +75,34 @@
     NSLog(@"Destroyed: %@", self);
 }
 
+- (void)setThumbnailFromImage:(UIImage *)image
+{
+    CGSize originalImageSize = image.size;
+    CGRect newRect = CGRectMake(0, 0, 35, 35);
+    
+    float ratio = MAX(newRect.size.width / originalImageSize.width,
+                       newRect.size.height / originalImageSize.height);
+    
+    UIGraphicsBeginImageContextWithOptions(newRect.size, NO, 0.0);
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:newRect
+                                                    cornerRadius:5.0];
+    [path addClip];
+    
+    CGRect projectRect;
+    projectRect.size.width = ratio * originalImageSize.width;
+    projectRect.size.height = ratio * originalImageSize.height;
+    projectRect.origin.x = (newRect.size.width - projectRect.size.width) / 2.0;
+    projectRect.origin.y = (newRect.size.height - projectRect.size.height) / 2.0;
+    
+    [image drawInRect:projectRect];
+    
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    self.thumbnail = smallImage;
+    
+    UIGraphicsEndImageContext();
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)coder
@@ -82,6 +111,7 @@
     [coder encodeObject:self.serialNumber forKey:@"serialNumber"];
     [coder encodeObject:self.dateCreated forKey:@"dateCreated"];
     [coder encodeObject:self.itemKey forKey:@"itemKey"];
+    [coder encodeObject:self.thumbnail forKey:@"thumbnail"];
     
     [coder encodeInt:self.valueInDollars forKey:@"valueInDollars"];
 }
@@ -93,6 +123,7 @@
         _serialNumber = [coder decodeObjectForKey:@"serialNumber"];
         _dateCreated = [coder decodeObjectForKey:@"dateCreated"];
         _itemKey = [coder decodeObjectForKey:@"itemKey"];
+        _thumbnail = [coder decodeObjectForKey:@"thumbnail"];
         
         _valueInDollars = [coder decodeIntForKey:@"valueInDollars"];
     }

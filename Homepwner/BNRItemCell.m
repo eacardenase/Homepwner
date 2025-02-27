@@ -23,9 +23,7 @@
 - (UIImageView *)itemImageView
 {
     if (!_itemImageView) {
-        UIImage *itemImage = [UIImage systemImageNamed:@"photo"];
-        
-        _itemImageView = [[UIImageView alloc] initWithImage:itemImage];
+        _itemImageView = [[UIImageView alloc] init];
         _itemImageView.contentMode = UIViewContentModeScaleAspectFit;
         _itemImageView.translatesAutoresizingMaskIntoConstraints = NO;
         _itemImageView.tintColor = [UIColor lightGrayColor];
@@ -71,11 +69,12 @@
     [self.contentView addSubview:self.valueLabel];
     
     [NSLayoutConstraint activateConstraints:@[
-        [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+        [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:2],
         [self.itemImageView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:20],
         [self.itemImageView.heightAnchor constraintGreaterThanOrEqualToConstant:40],
         [self.itemImageView.widthAnchor constraintEqualToAnchor:self.itemImageView.heightAnchor],
         [self.itemImageView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
+        [self.itemImageView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-2],
         
         [self.nameLabel.leadingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor constant:10],
         [self.nameLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],

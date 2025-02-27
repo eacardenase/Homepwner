@@ -4,7 +4,7 @@
 //
 //  Created by Edwin Cardenas on 3/02/25.
 //
-
+#import <UIKit/UIKit.h>
 #import "BNRItemStore.h"
 #import "BNRItem.h"
 #import "BNRImageStore.h"
@@ -44,7 +44,7 @@
         NSData *data = [NSData dataWithContentsOfFile:path];
         NSError *error;
         
-        NSSet *validClasses = [NSSet setWithObjects: NSMutableArray.class, BNRItem.class, NSString.class, NSDate.class, nil];
+        NSSet *validClasses = [NSSet setWithObjects: NSMutableArray.class, BNRItem.class, NSString.class, NSDate.class, UIImage.class, nil];
         _privateItems = [NSKeyedUnarchiver unarchivedObjectOfClasses:validClasses fromData:data error:&error];
         
         if (!_privateItems) {
