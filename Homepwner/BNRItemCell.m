@@ -8,6 +8,11 @@
 #import "BNRItemCell.h"
 #import "BNRItem.h"
 
+@interface BNRItemCell ()
+
+@property (nonatomic) UIButton *thumbnailButton;
+
+@end
 
 @implementation BNRItemCell
 
@@ -64,12 +69,26 @@
     return _valueLabel;
 }
 
+- (UIButton *)thumbnailButton
+{
+    if (!_thumbnailButton) {
+        _thumbnailButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _thumbnailButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_thumbnailButton addTarget:self
+                             action:@selector(showImage:)
+              forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _thumbnailButton;
+}
+
 - (void)setupViews
 {
     [self.contentView addSubview:self.itemImageView];
     [self.contentView addSubview:self.nameLabel];
     [self.contentView addSubview:self.valueLabel];
     [self.contentView addSubview:self.serialNumberLabel];
+    [self.contentView addSubview:self.thumbnailButton];
     
     [NSLayoutConstraint activateConstraints:@[
         [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:8],
@@ -86,8 +105,22 @@
         [self.serialNumberLabel.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor],
         
         [self.valueLabel.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-20],
-        [self.valueLabel.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor]
+        [self.valueLabel.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor],
+        
+        [self.thumbnailButton.topAnchor constraintEqualToAnchor:self.itemImageView.topAnchor],
+        [self.thumbnailButton.leadingAnchor constraintEqualToAnchor:self.itemImageView.leadingAnchor],
+        [self.thumbnailButton.trailingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor],
+        [self.thumbnailButton.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor]
     ]];
+}
+
+#pragma mark - Actions
+
+- (void)showImage:(id)sender
+{
+    if (self.actionBlock) {
+        self.actionBlock();
+    }
 }
 
 

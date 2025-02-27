@@ -81,6 +81,10 @@
         NSForegroundColorAttributeName: [UIColor grayColor]
     }];
     
+    cell.actionBlock = ^{
+        NSLog(@"Going to show image for %@", currentItem);
+    };
+    
     return cell;
 }
 

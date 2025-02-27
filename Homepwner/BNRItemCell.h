@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) UILabel *serialNumberLabel;
 @property (nonatomic) UILabel *valueLabel;
 
+@property (nonatomic, copy) void (^actionBlock)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END
