@@ -83,10 +83,14 @@
         NSForegroundColorAttributeName: [UIColor grayColor]
     }];
     
+    __weak BNRItemCell *weakCell = cell;
+    
     cell.actionBlock = ^{
         if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad) {
             return;
         }
+        
+        BNRItemCell *strongCell = weakCell;
         
         NSString *itemKey = currentItem.itemKey;
         UIImage *image = [[BNRImageStore sharedStore] imageForKey:itemKey];
@@ -99,7 +103,7 @@
         
         imageViewController.image = image;
         imageViewController.modalPresentationStyle = UIModalPresentationPopover;
-        imageViewController.popoverPresentationController.sourceView = cell.itemImageView;
+        imageViewController.popoverPresentationController.sourceView = strongCell.itemImageView;
         
         [self presentViewController:imageViewController
                            animated:YES
