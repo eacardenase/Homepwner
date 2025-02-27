@@ -67,17 +67,21 @@
     [self.contentView addSubview:self.itemImageView];
     [self.contentView addSubview:self.nameLabel];
     [self.contentView addSubview:self.valueLabel];
+    [self.contentView addSubview:self.serialNumberLabel];
     
     [NSLayoutConstraint activateConstraints:@[
-        [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:2],
+        [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:8],
         [self.itemImageView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:20],
         [self.itemImageView.heightAnchor constraintGreaterThanOrEqualToConstant:40],
         [self.itemImageView.widthAnchor constraintEqualToAnchor:self.itemImageView.heightAnchor],
         [self.itemImageView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
-        [self.itemImageView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-2],
+        [self.itemImageView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-8],
         
         [self.nameLabel.leadingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor constant:10],
-        [self.nameLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
+        [self.nameLabel.topAnchor constraintEqualToAnchor:self.itemImageView.topAnchor],
+        
+        [self.serialNumberLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
+        [self.serialNumberLabel.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor],
         
         [self.valueLabel.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-20],
         [self.valueLabel.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor]

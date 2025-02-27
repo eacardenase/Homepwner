@@ -74,9 +74,12 @@
     BNRItem *currentItem = items[indexPath.row];
     
     cell.nameLabel.text = currentItem.itemName;
-    cell.serialNumberLabel.text = currentItem.serialNumber;
     cell.valueLabel.text = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
     cell.itemImageView.image = currentItem.thumbnail;
+    cell.serialNumberLabel.attributedText = [[NSAttributedString alloc] initWithString:currentItem.serialNumber attributes:@{
+        NSFontAttributeName: [UIFont italicSystemFontOfSize:12],
+        NSForegroundColorAttributeName: [UIColor grayColor]
+    }];
     
     return cell;
 }
