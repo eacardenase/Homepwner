@@ -83,10 +83,10 @@
     }];
     
     NSString *formattedString = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
-    BOOL isGreaterOrEqualto50 = currentItem.valueInDollars >= 50;
+    UIColor *valueTextColor = currentItem.valueInDollars >= 50 ? [UIColor systemGreenColor] : [UIColor systemRedColor];
     
     cell.valueLabel.attributedText = [[NSAttributedString alloc] initWithString:formattedString attributes:@{
-        NSForegroundColorAttributeName: isGreaterOrEqualto50 ? [UIColor systemGreenColor] : [UIColor systemRedColor]
+        NSForegroundColorAttributeName: valueTextColor
     }];
     
     __weak BNRItemCell *weakCell = cell;
