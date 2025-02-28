@@ -35,6 +35,8 @@
         _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_nameLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
                                       forAxis:UILayoutConstraintAxisHorizontal];
+        [_nameField setContentHuggingPriority:UILayoutPriorityDefaultLow
+                                                    forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _nameLabel;
@@ -48,6 +50,8 @@
         _nameField.text = self.item.itemName;
         _nameField.translatesAutoresizingMaskIntoConstraints = NO;
         _nameField.delegate = self;
+        [_nameField setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                                    forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _nameField;
@@ -85,8 +89,6 @@
         _valueLabel = [[UILabel alloc] init];
         _valueLabel.text = @"Value";
         _valueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [_valueLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                       forAxis:UILayoutConstraintAxisHorizontal];
     }
     
     return _valueLabel;
@@ -177,7 +179,6 @@
         [self.nameLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
         [self.nameLabel.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:20],
         [self.nameLabel.centerYAnchor constraintEqualToAnchor:self.nameField.centerYAnchor],
-        [self.nameLabel.widthAnchor constraintEqualToConstant:50],
         
         [self.nameField.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor],
         [self.nameField.leadingAnchor constraintEqualToAnchor:self.nameLabel.trailingAnchor constant:20],
