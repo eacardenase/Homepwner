@@ -141,7 +141,6 @@
         _imageView = [[UIImageView alloc] initWithImage:itemImage];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-        _imageView.backgroundColor = [UIColor secondarySystemBackgroundColor];
         _imageView.tintColor = [UIColor lightGrayColor];
     }
     

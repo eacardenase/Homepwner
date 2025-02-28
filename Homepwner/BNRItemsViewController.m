@@ -76,11 +76,17 @@
     BNRItem *currentItem = items[indexPath.row];
     
     cell.nameLabel.text = currentItem.itemName;
-    cell.valueLabel.text = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
     cell.itemImageView.image = currentItem.thumbnail;
     cell.serialNumberLabel.attributedText = [[NSAttributedString alloc] initWithString:currentItem.serialNumber attributes:@{
         NSFontAttributeName: [UIFont italicSystemFontOfSize:12],
         NSForegroundColorAttributeName: [UIColor grayColor]
+    }];
+    
+    NSString *formattedString = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
+    BOOL isGreaterOrEqualto50 = currentItem.valueInDollars >= 50;
+    
+    cell.valueLabel.attributedText = [[NSAttributedString alloc] initWithString:formattedString attributes:@{
+        NSForegroundColorAttributeName: isGreaterOrEqualto50 ? [UIColor systemGreenColor] : [UIColor systemRedColor]
     }];
     
     __weak BNRItemCell *weakCell = cell;
