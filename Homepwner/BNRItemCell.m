@@ -20,9 +20,22 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setupViews];
+        [self updateInterfaceForDynamicTypeSize];
+        
+        NSNotificationCenter *notificationCenter = NSNotificationCenter.defaultCenter;
+        
+        [notificationCenter addObserver:self
+                               selector:@selector(updateInterfaceForDynamicTypeSize)
+                                   name:UIContentSizeCategoryDidChangeNotification
+                                 object:nil];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (UIImageView *)itemImageView
@@ -105,13 +118,22 @@
         [self.serialNumberLabel.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor],
         
         [self.valueLabel.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-20],
-        [self.valueLabel.topAnchor constraintEqualToAnchor:self.nameLabel.topAnchor],
+        [self.valueLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
         
         [self.thumbnailButton.topAnchor constraintEqualToAnchor:self.itemImageView.topAnchor],
         [self.thumbnailButton.leadingAnchor constraintEqualToAnchor:self.itemImageView.leadingAnchor],
         [self.thumbnailButton.trailingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor],
         [self.thumbnailButton.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor]
     ]];
+}
+
+- (void)updateInterfaceForDynamicTypeSize
+{
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    self.nameLabel.font = font;
+    self.serialNumberLabel.font = font;
+    self.valueLabel.font = font;
 }
 
 #pragma mark - Actions
