@@ -93,7 +93,7 @@
     [NSLayoutConstraint activateConstraints:@[
         [self.itemImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:8],
         [self.itemImageView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:20],
-        [self.itemImageView.heightAnchor constraintGreaterThanOrEqualToConstant:40],
+        [self.itemImageView.heightAnchor constraintEqualToAnchor:self.itemImageView.widthAnchor],
         [self.itemImageView.widthAnchor constraintEqualToAnchor:self.itemImageView.heightAnchor],
         [self.itemImageView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
         [self.itemImageView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-8],
