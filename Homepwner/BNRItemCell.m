@@ -97,10 +97,17 @@
 
 - (void)setupViews
 {
+    UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
+        self.nameLabel, self.serialNumberLabel,
+    ]];
+    stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    stackView.axis = UILayoutConstraintAxisVertical;
+    stackView.distribution = UIStackViewDistributionEqualCentering;
+    stackView.spacing = 4;
+    
     [self.contentView addSubview:self.itemImageView];
-    [self.contentView addSubview:self.nameLabel];
+    [self.contentView addSubview:stackView];
     [self.contentView addSubview:self.valueLabel];
-    [self.contentView addSubview:self.serialNumberLabel];
     [self.contentView addSubview:self.thumbnailButton];
     
     [NSLayoutConstraint activateConstraints:@[
@@ -111,11 +118,8 @@
         [self.itemImageView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
         [self.itemImageView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-8],
         
-        [self.nameLabel.leadingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor constant:10],
-        [self.nameLabel.topAnchor constraintEqualToAnchor:self.itemImageView.topAnchor],
-        
-        [self.serialNumberLabel.leadingAnchor constraintEqualToAnchor:self.nameLabel.leadingAnchor],
-        [self.serialNumberLabel.bottomAnchor constraintEqualToAnchor:self.itemImageView.bottomAnchor],
+        [stackView.leadingAnchor constraintEqualToAnchor:self.itemImageView.trailingAnchor constant:10],
+        [stackView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
         
         [self.valueLabel.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-20],
         [self.valueLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
