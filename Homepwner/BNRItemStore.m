@@ -120,6 +120,30 @@
     
     [self.privateItems removeObjectAtIndex:fromIndex];
     [self.privateItems insertObject:item atIndex:toIndex];
+    
+    // Computing a new orderValue for the object that was moved
+    double lowerBound = 0.0;
+    double upperBound = 0.0;
+    
+    // Is there an object before it in the array?
+    if (toIndex > 0) {
+        lowerBound = [self.privateItems[(toIndex - 1)] orderingValue];
+    } else {
+        lowerBound = [self.privateItems[1] orderingValue] - 2.0;
+    }
+    
+    // Is there an object after it in the array?
+    if (toIndex < self.privateItems.count - 1) {
+        upperBound = [self.privateItems[(toIndex + 1)] orderingValue];
+    } else {
+        upperBound = [self.privateItems[(toIndex - 1)] orderingValue] + 2.0;
+    }
+    
+    double newOrderValue = (lowerBound + upperBound) / 2.0;
+    
+    NSLog(@"moving to order %f", newOrderValue);
+    
+    item.orderingValue = newOrderValue;
 }
 
 - (NSString *)itemArchivePath
