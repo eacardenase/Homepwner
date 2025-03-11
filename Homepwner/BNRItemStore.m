@@ -211,24 +211,26 @@
                         format:@"Reason: %@", error.localizedDescription];
         }
         
-        if (_allAssetTypes.count == 0) {
-            NSManagedObject *assetType;
-            
-            assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
-                                                      inManagedObjectContext:self.context];
-            [assetType setValue:@"Furniture" forKey:@"label"];
-            [_allAssetTypes addObject:assetType];
-            
-            assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
-                                                      inManagedObjectContext:self.context];
-            [assetType setValue:@"Jewelry" forKey:@"label"];
-            [_allAssetTypes addObject:assetType];
-            
-            assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
-                                                      inManagedObjectContext:self.context];
-            [assetType setValue:@"Electronics" forKey:@"label"];
-            [_allAssetTypes addObject:assetType];
-        }
+        _allAssetTypes = [result mutableCopy];
+    }
+    
+    if (_allAssetTypes.count == 0) {
+        NSManagedObject *assetType;
+        
+        assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                                  inManagedObjectContext:self.context];
+        [assetType setValue:@"Furniture" forKey:@"label"];
+        [_allAssetTypes addObject:assetType];
+        
+        assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                                  inManagedObjectContext:self.context];
+        [assetType setValue:@"Jewelry" forKey:@"label"];
+        [_allAssetTypes addObject:assetType];
+        
+        assetType = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                                  inManagedObjectContext:self.context];
+        [assetType setValue:@"Electronics" forKey:@"label"];
+        [_allAssetTypes addObject:assetType];
     }
     
     return _allAssetTypes;
