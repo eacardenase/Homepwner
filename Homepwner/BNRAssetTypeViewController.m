@@ -17,6 +17,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Asset Type";
+    
     [self.tableView registerClass:UITableViewCell.class
            forCellReuseIdentifier:NSStringFromClass(UITableViewCell.class)];
 }
