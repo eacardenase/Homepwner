@@ -105,6 +105,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (!currencyFormatter) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        currencyFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    }
+    
     BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([BNRItemCell class])
                                                             forIndexPath:indexPath];
     
@@ -118,7 +125,7 @@
         NSForegroundColorAttributeName: [UIColor grayColor]
     }];
     
-    NSString *formattedString = [NSString stringWithFormat:@"$%d", currentItem.valueInDollars];
+    NSString *formattedString = [currencyFormatter stringFromNumber: @(currentItem.valueInDollars)];
     UIColor *valueTextColor = currentItem.valueInDollars >= 50 ? [UIColor systemGreenColor] : [UIColor systemRedColor];
     
     cell.valueLabel.attributedText = [[NSAttributedString alloc] initWithString:formattedString attributes:@{
