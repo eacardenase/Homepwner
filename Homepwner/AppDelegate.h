@@ -8,6 +8,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+extern NSString * const BNRNextItemValuePrefsKey;
+extern NSString * const BNRNextItemNamePrefsKey;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
