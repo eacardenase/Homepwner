@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		A539CC922D5131E900A44B3C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A539CC912D5131E900A44B3C /* README.md */; };
+		A57991ED2D8338C900DB6AC8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A57991EC2D8338C900DB6AC8 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A539CC742D51318C00A44B3C /* Homepwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homepwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A539CC912D5131E900A44B3C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A57991EC2D8338C900DB6AC8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -50,6 +52,7 @@
 		A539CC6B2D51318C00A44B3C = {
 			isa = PBXGroup;
 			children = (
+				A57991EC2D8338C900DB6AC8 /* Settings.bundle */,
 				A539CC912D5131E900A44B3C /* README.md */,
 				A539CC762D51318C00A44B3C /* Homepwner */,
 				A539CC752D51318C00A44B3C /* Products */,
@@ -127,6 +130,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57991ED2D8338C900DB6AC8 /* Settings.bundle in Resources */,
 				A539CC922D5131E900A44B3C /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +155,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DZDWNPN8YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Homepwner/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -176,6 +181,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DZDWNPN8YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Homepwner/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

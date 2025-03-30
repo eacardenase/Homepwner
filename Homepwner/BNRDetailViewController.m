@@ -5,10 +5,12 @@
 //  Created by Edwin Cardenas on 6/02/25.
 //
 
+#import "AppDelegate.h"
 #import "BNRDetailViewController.h"
 #import "BNRItem.h"
 #import "BNRImageStore.h"
 #import "BNRItemStore.h"
+#import "BNRAssetTypeViewController.h"
 
 @interface BNRDetailViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -21,6 +23,7 @@
 @property (nonatomic) UILabel *dateLabel;
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UIBarButtonItem *cameraButton;
+@property (nonatomic) UIBarButtonItem *assetTypeButton;
 
 @end
 
@@ -154,11 +157,29 @@
     return _cameraButton;
 }
 
+- (UIBarButtonItem *)assetTypeButton
+{
+    if (!_assetTypeButton) {
+//        _assetTypeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+//                                                                         target:self
+//                                                                         action:@selector(showAssetTypePicker:)];
+//        _assetTypeButton = [[UIBarButtonItem alloc] initWithTitle:buttonTitle
+//                                                            style:UIBarButtonItemStylePlain
+//                                                           target:self
+//                                                           action:@selector(showAssetTypePicker:)];
+        _assetTypeButton = [[UIBarButtonItem alloc] init];
+        _assetTypeButton.target = self;
+        _assetTypeButton.action = @selector(showAssetTypePicker:);
+    }
+    
+    return _assetTypeButton;
+}
+
 - (void)setupViews
 {
     self.title = self.item.itemName;
     self.navigationController.toolbarHidden = NO;
-    self.toolbarItems = @[self.cameraButton];
+    self.toolbarItems = @[self.cameraButton, self.assetTypeButton];
     
     [self.view addSubview:self.nameLabel];
     [self.view addSubview:self.nameField];
@@ -301,12 +322,32 @@
     BNRItem *item = self.item;
     item.itemName = self.nameField.text;
     item.serialNumber = self.serialNumberField.text;
-    item.valueInDollars = [self.valueField.text intValue];
+    
+    int newValue = [self.valueField.text intValue];
+    
+    if (newValue == item.valueInDollars) {
+        return;
+    }
+    
+    item.valueInDollars = newValue;
+    
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    
+    [defaults setInteger:newValue
+                  forKey:BNRNextItemValuePrefsKey];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
+    
+    if (!typeLabel) {
+        typeLabel = @"None";
+    }
+    
+    self.assetTypeButton.title = [NSString stringWithFormat:@"Type: %@", typeLabel];
     
     [self prepareViewsForOrientation:[UITraitCollection currentTraitCollection]];
 }
@@ -343,6 +384,20 @@
     [self presentViewController:imagePicker
                        animated:YES
                      completion:nil];
+}
+
+- (void)showAssetTypePicker:(id)sender
+{
+    NSLog(@"DEBUG: showAssetTypePicker: button tapped");
+    
+    [self.view endEditing:YES];
+    
+    BNRAssetTypeViewController *assetViewController = [[BNRAssetTypeViewController alloc]
+                                                       initWithStyle:UITableViewStylePlain];
+    assetViewController.item = self.item;
+    
+    [self.navigationController pushViewController:assetViewController
+                                         animated:YES];
 }
 
 - (void)dismissKeyboard

@@ -79,7 +79,7 @@
         if (result) {
             self.dictionary[key] = result;
         } else {
-            NSLog(@"Error: unable to find %@", imagePath);
+            NSLog(@"Error: unable to find image at path: %@", imagePath);
         }
     }
     
